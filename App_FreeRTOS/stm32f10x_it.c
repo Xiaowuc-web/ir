@@ -23,7 +23,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_it.h"
-
+#include "ir.h"
+#include "task.h"
 /** @addtogroup STM32F10x_StdPeriph_Template
   * @{
   */
@@ -152,3 +153,23 @@ void DebugMon_Handler(void)
 
 
 /******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
+
+ void EXTI15_10_IRQHandler(void)
+{
+  uint16_t timestamp;
+BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+  if(EXTI_GetITStatus(EXTI_Line10)!= RESET)
+  {
+    timestamp=TIM_GetCounter(TIM2);
+    EXTI_ClearITPendingBit(EXTI_Line10);
+    if (xQueueSendFromISR(g_irQueue,&timestamp, &xHigherPriorityTaskWoken)!=pdPASS)
+    {
+
+    }
+  }
+
+
+  
+portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+
+}

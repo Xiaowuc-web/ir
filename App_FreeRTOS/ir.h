@@ -3,7 +3,7 @@
  * @brief  红外接收模块的公共接口。
  *
  * 硬件连接：M8 红外接收模块，信号引脚为 PB10。
- * 当前仅提供时间数据队列初始化接口，尚未提供完整的红外解码接口。
+ * 提供时间数据队列、测时定时器初始化及接收任务接口，尚未实现完整解码。
  * IR_TIM2_Init 和 IR_EXTI_Init 是 ir.c 内部的 static 函数，不在此声明。
  */
 #ifndef IR_H
@@ -51,7 +51,26 @@ extern QueueHandle_t g_irQueue;
  *   仅调用本函数，尚不能接收遥控器信号或获取按键键码。
  */
 void IR_QueueInit(void);
+
+/**
+ * @brief  初始化并启动 TIM2，用于红外边沿时间测量。
+ * @param  无。
+ * @return 无。
+ * @note   系统时钟配置完成后、创建红外任务前调用。
+ *         目标计数频率为 1 MHz，本接口不会启用接收中断。
+ *         不应与其他独立使用 TIM2 的功能直接共用。
+ */
 void IR_TimerInit(void);
+
+/**
+ * @brief  红外接收任务，启用 EXTI 并通过队列读取时间戳、计算间隔。
+ * @param  argument：任务参数，当前未使用，可传入 NULL。
+ * @return 不返回，内部循环运行。
+ * @note   使用 xTaskCreate 创建，必须先完成队列及 TIM2 初始化。
+ *         在任务开始运行后才启用接收中断；无数据时阻塞等待队列。
+ *         当前未实现协议解码，首次间隔及长间隔回绕仍需后续解码逻辑处理。
+ */
+void IR_Task(void *argument);
 #ifdef __cplusplus
 }
 #endif

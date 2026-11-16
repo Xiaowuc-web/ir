@@ -30,7 +30,6 @@ void IR_QueueInit(void)
     }
 }
 
-
 /**
  * @brief  将 TIM2 配置为自由运行的红外测时计数器，并启动计数。
  * @param  无。
@@ -43,7 +42,7 @@ void IR_QueueInit(void)
  *
  * 调用时机：
  *   系统时钟配置完成后、启用红外边沿中断之前调用。
- *   本函数为文件内部函数，目前尚未被调用。
+ *   本函数为文件内部函数，由 IR_TimerInit 调用。
  *
  * 注意事项：
  *   输入时钟不低于 1 MHz、可被 1 MHz 整除且预分频值在有效范围内时，
@@ -102,7 +101,7 @@ static void IR_TIM2_Init(void)
  *
  * 调用时机：
  *   中断优先级分组、时间数据队列、测时计数器及中断处理函数准备完成后调用。
- *   本函数为文件内部函数，目前尚未被调用。
+ *   本函数为文件内部函数，由 IR_Task 在调度器启动后调用。
  *
  * 注意事项：
  *   必须先实现 EXTI15_10_IRQHandler，处理 EXTI10 并清除对应挂起标志。
@@ -119,8 +118,7 @@ static void IR_EXTI_Init(void)
 
     RCC_APB2PeriphClockCmd(
         RCC_APB2Periph_GPIOB | RCC_APB2Periph_AFIO,
-        ENABLE
-    );
+        ENABLE);
 
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
@@ -129,8 +127,7 @@ static void IR_EXTI_Init(void)
 
     GPIO_EXTILineConfig(
         GPIO_PortSourceGPIOB,
-        GPIO_PinSource10
-    );
+        GPIO_PinSource10);
 
     EXTI_InitStructure.EXTI_Line = EXTI_Line10;
     EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
@@ -147,7 +144,44 @@ static void IR_EXTI_Init(void)
     NVIC_Init(&NVIC_InitStructure);
 }
 
+/**
+ * @brief  初始化并启动红外测时定时器 TIM2。
+ * @param  无。
+ * @return 无。
+ * @note   在创建红外任务前调用，不启用 PB10 接收中断。
+ *         TIM2 目标计数周期为 1 微秒，每 65.536 ms 回绕一次。
+ */
 void IR_TimerInit(void)
 {
     IR_TIM2_Init();
+}
+
+/**
+ * @brief  启用红外接收中断，接收时间戳并计算相邻边沿间隔。
+ * @param  argument：任务参数，当前未使用。
+ * @return 不返回，任务持续等待队列数据。
+ * @note   必须先初始化队列和 TIM2，由调度器启动本任务后再启用 EXTI。
+ *         保留 interal 变量名，单位为微秒；首次计算以 pre 的初值 0 为基准，
+ *         不能将首次计算结果当作有效的相邻边沿间隔。
+ *         当前仅计算间隔，不解码键码；长间隔回绕及丢数据恢复尚未实现。
+ */
+void IR_Task(void *argument)
+{
+    uint16_t now, interal;
+    uint16_t pre = 0;
+
+    (void)argument;
+    IR_EXTI_Init();
+
+    for (;;)
+    {
+        if (xQueueReceive(g_irQueue, &now, portMAX_DELAY) != pdPASS)
+        {
+            continue;
+        }
+
+        interal = (uint16_t)(now - pre);
+        pre = now;
+        (void)interal;
+    }
 }
