@@ -1,0 +1,120 @@
+{
+  "repository": "https://github.com/FreeRTOS/FreeRTOS-Kernel",
+  "tag": "V10.6.2",
+  "port": "portable/RVDS/ARM_CM3",
+  "license": "MIT",
+  "files": [
+    {
+      "path": "tasks.c",
+      "sha256": "0de54bbd780d5010f8d7b4b754e23182fff9a6eafa3f931e6511eaace86ee0d6"
+    },
+    {
+      "path": "queue.c",
+      "sha256": "f5ea6932099c8e368152c2ef045bd9170b593df28cc44338bb65c240e671a82d"
+    },
+    {
+      "path": "list.c",
+      "sha256": "fe99e013ba914cc1f9e3821e05f39eb7ee9e5d76fad3939bf6e38321e427f119"
+    },
+    {
+      "path": "timers.c",
+      "sha256": "6b20d48db0419ca2673adb8b27c4b4b629c5aaac5383f63a2dc78d317f044532"
+    },
+    {
+      "path": "event_groups.c",
+      "sha256": "341b5148d91c1b5750b7f5845f9ef204393c3e2abd3a1f23d4d11a63776c0f8c"
+    },
+    {
+      "path": "stream_buffer.c",
+      "sha256": "c9ae883a51db5652ae0aff24226152e62dfe1ad89cbf363c3e6aa2af5dd778a9"
+    },
+    {
+      "path": "portable/RVDS/ARM_CM3/port.c",
+      "sha256": "84ebbe38efc4c67543811c0bb8d327ee58aea70e4a4777f2ab14c7e5cf988986"
+    },
+    {
+      "path": "portable/RVDS/ARM_CM3/portmacro.h",
+      "sha256": "efac4e6729a50281fb237697577563c2d1dc833c7d6e3f605ef25160af57605e"
+    },
+    {
+      "path": "portable/MemMang/heap_4.c",
+      "sha256": "37426078a083b5fe4e76adb76dc6f0f109a10273c3b644dc786e29891cbe1bbc"
+    },
+    {
+      "path": "LICENSE.md",
+      "sha256": "508a77d2e7b51d98adeed32648ad124b7b30241a8e70b2e72c99f92d8e5874d1"
+    },
+    {
+      "path": "include/FreeRTOS.h",
+      "sha256": "9a66a6c69371891cca153049505e1bb0bb3ef673fcf6ca8c4684229d94b78cf0"
+    },
+    {
+      "path": "include/StackMacros.h",
+      "sha256": "59ef7acd70f9c03d76f5760ea82083836530ad05a22aa71d0fa3d5c85b3823bf"
+    },
+    {
+      "path": "include/atomic.h",
+      "sha256": "cafe39eff8bd9b939a8281f2f857b0ed9929ec88dd45ddaed94b704712b0ec59"
+    },
+    {
+      "path": "include/croutine.h",
+      "sha256": "8370d72396dc750756cdb7b4885067fbfce09a99c0bdd4c2bfa27e377b982ad3"
+    },
+    {
+      "path": "include/deprecated_definitions.h",
+      "sha256": "f9b59a4e21ccfde9c368b401e0b1e871e37c209c87b6b711d3cf59e9c7410617"
+    },
+    {
+      "path": "include/event_groups.h",
+      "sha256": "d500546032a8baa03213188773e0db6e5da83bdae75425c239243150551b054c"
+    },
+    {
+      "path": "include/list.h",
+      "sha256": "9d2af9ab5f2965f2629d1767a95695065429b06807dd8755565dfc4a5a00ac6e"
+    },
+    {
+      "path": "include/message_buffer.h",
+      "sha256": "857e89e8545526904c8f4be0da752a8736a00b03a401af77cd6727dd3f362bde"
+    },
+    {
+      "path": "include/mpu_prototypes.h",
+      "sha256": "dca0190f8a0422bf5f2e5b534d510b2a1d086deb89a882ddc0ff7b08f5723dba"
+    },
+    {
+      "path": "include/mpu_wrappers.h",
+      "sha256": "650decac08ce3bed20a8a260dfcdcd3d4d71e72ac5ce0f7a9a504f17d18b61c5"
+    },
+    {
+      "path": "include/portable.h",
+      "sha256": "65429c17c9c92858d30410db486d2d6e44eada82cf3643db2f6dcc6f5d7ad4b2"
+    },
+    {
+      "path": "include/projdefs.h",
+      "sha256": "ad7cbe1ab8f342f6176824e4224e3d820d25cbc37ee3bc19331d9e6e07b028e6"
+    },
+    {
+      "path": "include/queue.h",
+      "sha256": "33950fea4caa4c7c68dc0f532c0d7e8ca2f32e1ebd9fb87bc9e6698a6d6b0fb9"
+    },
+    {
+      "path": "include/semphr.h",
+      "sha256": "8cb37f2e662d365e6a21437e1fd2ab8166f3c1ed95c46bc8c5609586c9a3dc81"
+    },
+    {
+      "path": "include/stack_macros.h",
+      "sha256": "743425393d3919156b515da5f71769eb2edfc0cdf215c2cbbcb61669289c582c"
+    },
+    {
+      "path": "include/stream_buffer.h",
+      "sha256": "70d9fc6bb35520e897d9ccff0a2fb3271268fdf43a7a7f02c4f4fc6f9c22cdc0"
+    },
+    {
+      "path": "include/task.h",
+      "sha256": "bd1138bd2b2b2444cbac651641a908102125c510792a3aeaebc1d9f039977e2e"
+    },
+    {
+      "path": "include/timers.h",
+      "sha256": "2bf6ece5c1b50889066190774f412751e31abc005ee9e153f0e05fac081dca99"
+    }
+  ]
+}
