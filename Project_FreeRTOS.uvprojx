@@ -656,6 +656,11 @@
               <FilePath>.\App_FreeRTOS\main.c</FilePath>
             </File>
             <File>
+              <FileName>ir.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\App_FreeRTOS\ir.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32f10x_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\User\stm32f10x_conf.h</FilePath>
